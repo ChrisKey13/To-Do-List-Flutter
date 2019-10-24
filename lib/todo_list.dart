@@ -36,7 +36,10 @@ class _TodoListState extends State<TodoList> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text('New todo'),
-            content: TextField(controller: controller),
+            content: TextField(
+              controller: controller,
+              autofocus: true,
+              ),
             actions: <Widget>[
               FlatButton(
                 child: Text('Cancel'),
@@ -44,9 +47,14 @@ class _TodoListState extends State<TodoList> {
               FlatButton(
                 child: Text('Add'),
                 onPressed: () {
-                  print(controller.value.text);
-                  controller.clear();
-                  setState(())
+                  setState(() {
+                    final todo = new Todo(title: controller.value.text);
+                    
+                    todos.add(todo);
+                    controller.clear();
+
+                    Navigator.of(context).pop();
+                  });
                 },
               ),
             ],
