@@ -12,10 +12,7 @@
     Widget build(BuildContext context) {
       return MaterialApp(
         title: 'Todo List',
-        home: Scaffold(
-            appBar: Appbar(title: Text('Todo List')),
-            body: TodoList(),
-        ),
+        home: TodoList(),
       );
     }
   }

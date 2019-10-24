@@ -7,8 +7,66 @@ class TodoList extends StatefulWidget {
 }
 
 class _TodoListState extends State<TodoList> {
+  List<Todo> todos = [];
+
+  TextEditingController controller = new TextEditingController();
+
+  _toggleTodo(Todo todo, bool isChecked) {
+    setState(() {
+      todo.isDone = isChecked;
+    });
+  }
+
+  _buildItem() {}
+   Widget _buildItem(BuildContext context, int index) {
+     final todo = todos[index];
+
+     return CheckboxListTile(
+       value: todo.isDone,
+       title: Text(todo.title),
+       onChanged: (bool isChecked) {
+         _toggleTodo(todo, isChecked);
+       },
+     );
+   }
+
+  _addTodo() {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('New todo'),
+            content: TextField(controller: controller),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Cancel'),
+              ),
+              FlatButton(
+                child: Text('Add'),
+                onPressed: () {
+                  print(controller.value.text);
+                  controller.clear();
+                  setState(())
+                },
+              ),
+            ],
+          );
+        },
+      );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+        appBar: Appbar(title: Text('Todo List')),
+        body: ListView.builder(
+          itemBuilder: _buildItem,
+          itemCount: todos.length,
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: _addTodo,
+        ),
+    );
   }
 }
